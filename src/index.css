@@ -1,8 +1,8 @@
-@import "tailwindcss/preflight" false;
+@import "tailwindcss"; 
 
 :root
 {
-  background-color: black;
+  background-color: rgb(155, 145, 145);
   color: white;
 }
 
