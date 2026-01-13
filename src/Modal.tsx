@@ -1,18 +1,38 @@
-import { useState } from "react"
+import { useReducer, useState } from "react"
 
 type JobType = {
     
     id: number,
     company: string,
+    companyIcon: string,
     position: string,
     status: "wishlist" | "applied" | "interview" | "offer" | "rejected" | "ghosted",
     link?: string,
     createdAt: string,
     rating?: number,
     moodTxt: string,
-
+    favorites: boolean
 }
 
+type State = {
+    empty: string;
+    active: string;
+};
+
+type Action = 
+    | { type: 'EMPTY' }
+    | { type: 'ACTIVE' };
+
+function inputReducer(state: State, action: Action): State {
+    switch (action.type) {
+        case 'EMPTY':
+            return { ...state, empty: "black" };
+        case 'ACTIVE':
+            return { ...state, empty: "purple" };
+        default:
+            return state; 
+    }
+}
 const Modal = () => {
     
     const [jobType, setJobType] = useState([{}]);
@@ -24,6 +44,8 @@ const Modal = () => {
     const [rating, setRating] = useState("-");
     const [moodTxt, setMoodTxt] = useState("");
 
+    const [state, dispatch] = useReducer(inputReducer, {empty: "red", 
+                                                        active: "green"})
     console.log(jobType)
     
     function handleJobType(){
@@ -34,21 +56,29 @@ const Modal = () => {
                 
                 id: crypto.randomUUID(),
                 company: company,
+                CompanyLogo: {
+                    logo: `https://img.logo.dev/${company}.com?token=pk_RKtwoXuaQDSJdIEDV1NYVA`,
+                    src: `${company} logo`
+                },
                 role: role,
                 status: status,
                 link: link,
                 createdAt: createdAt,
                 rating: rating,
                 moodTxt: moodTxt,
-                
+                favorties: false,
             }
             ]
+
+            
+        )
+
+        localStorage.setItem("Jobs", JSON.stringify(jobType))
         
-    )
-       
     }
     
-    
+                            console.log(state.empty)
+
     return(
     
         <section>
@@ -58,8 +88,12 @@ const Modal = () => {
                 <div>
                     
                     <label htmlFor="">Company name:</label>
-                    <input type="text" name="company" id="" value={company} onChange={(e)=>{
+                    
+                    <input className={`bg-${state.empty}-300`} type="text" name="company" id="" value={company} onChange={(e)=>{
                         setCompany(e.target.value)
+                        dispatch({
+                            type: 'EMPTY'
+                        })
                     }}/>
                     <label htmlFor="">role:</label>
                     <input type="text" name="role"  id="" value={role} onChange={(e)=>{
@@ -129,9 +163,10 @@ const Card = (jobType: JobType) => {
             <p>Status:{status}</p>
             <p>Mood:{moodTxt}</p>
             <p>Rating:{rating}</p>
-        
+
         </section>
     )
+
 
 }
 
