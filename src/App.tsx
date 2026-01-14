@@ -32,13 +32,20 @@ function App() {
     setJobs(previous => [...previous, newJob])
 
  }
+
+ function handleDeleteJobs(id: string){
+    
+  setJobs(previous => previous.filter(job => job.id !== id))
+  
+
+ }
   return (
   <>
   <Modal onAddJob={handleJobs}></Modal>
   
   <Column color='red' name='Active'>
     {jobs.map(job => (
-      <Card key={job.id} {...job}></Card>))};
+      <Card key={job.id} job={job} onDelete={handleDeleteJobs}></Card>))};
     </Column>
     </>
 

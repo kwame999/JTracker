@@ -24,13 +24,15 @@ type JobType = {
 }
 
 
-
 type Company = {
     logo: string,
     alt: string
 }
 
-
+type CardProps = {
+    job: JobType,
+    onDelete: (id: string) => void
+}
 
 const Column = ({children, color, name = "grey"}: ColumnProps) => {
 
@@ -50,11 +52,10 @@ const Column = ({children, color, name = "grey"}: ColumnProps) => {
 
 }
 
-const Card = (job: JobType) => {
+const Card = ({job, onDelete}: CardProps) => {
     
-    const {company, position, link, status, moodTxt, createdAt, rating} = job
+    const {id, company, position, link, status, moodTxt, createdAt, rating} = job
 
-    // const deleteTodo = (id) => { jobType.filter(job => job !== jobType.id)}
 
     return(
         
@@ -68,7 +69,11 @@ const Card = (job: JobType) => {
             <p>Mood:{moodTxt}</p>
             <p>Rating:{rating}</p>
         <div>
-            <button>Delete</button>
+            <button onClick={()=>{
+
+                onDelete(id)
+
+            }}>Delete</button>
             <button>Edit</button>
         </div>
 
