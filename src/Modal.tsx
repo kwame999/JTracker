@@ -1,87 +1,93 @@
 import { useReducer, useState } from "react"
 
+type Company = {
+    logo: string,
+    alt: string
+}
+
 type JobType = {
     
-    id: number,
+    id: string,
     company: string,
-    companyIcon: string,
+    companyIcon: Company,
     position: string,
-    status: "wishlist" | "applied" | "interview" | "offer" | "rejected" | "ghosted",
+    status: string,
     link?: string,
     createdAt: string,
     rating?: number,
     moodTxt: string,
-    favorites: boolean
+    favorites: boolean,
 }
 
 type State = {
-    empty: string;
-    active: string;
+    boarder: string;
 };
 
 type Action = 
     | { type: 'EMPTY' }
-    | { type: 'ACTIVE' };
+    | { type: 'ACTIVE' }
+    | { type: 'FILLED' };
+
+type AddJob = (newJob: JobType) => void;
+
+type ModalProps = {
+    onAddJob: AddJob
+}
 
 function inputReducer(state: State, action: Action): State {
     switch (action.type) {
         case 'EMPTY':
-            return { ...state, empty: "black" };
+            return { boarder: "white" };
         case 'ACTIVE':
-            return { ...state, empty: "purple" };
+            return {  boarder: "green" };
+        case 'FILLED':
+            return {  boarder: "green" };
         default:
             return state; 
     }
 }
-const Modal = () => {
+const Modal = ({ onAddJob }: ModalProps) => {
     
-    const [jobType, setJobType] = useState([{}]);
     const [company, setCompany] = useState("");
-    const [role, setRole] = useState("");
+    const [position, setPosition] = useState("");
     const [status, setStatus] = useState("");
     const [link, setLink] = useState("");
     const [createdAt, setCreatedAt] = useState("");
-    const [rating, setRating] = useState("-");
+    const [rating, setRating] = useState(0);
     const [moodTxt, setMoodTxt] = useState("");
 
-    const [state, dispatch] = useReducer(inputReducer, {empty: "red", 
-                                                        active: "green"})
-    console.log(jobType)
+    const [state, dispatch] = useReducer(inputReducer, {boarder: "white", 
+                                                     })
     
-    function handleJobType(){
+    function handleJobsNType(){
         
-        setJobType(
+        const newJob: JobType =
             
-            [...jobType, {
+            {
                 
                 id: crypto.randomUUID(),
                 company: company,
-                CompanyLogo: {
+                companyIcon: {
                     logo: `https://img.logo.dev/${company}.com?token=pk_RKtwoXuaQDSJdIEDV1NYVA`,
-                    src: `${company} logo`
+                    alt: `${company} logo`
                 },
-                role: role,
+                position: position,
                 status: status,
                 link: link,
                 createdAt: createdAt,
                 rating: rating,
                 moodTxt: moodTxt,
-                favorties: false,
+                favorites: false,
             }
-            ]
-
-            
-        )
-
-        localStorage.setItem("Jobs", JSON.stringify(jobType))
         
-    }
+    onAddJob(newJob);
     
-                            console.log(state.empty)
+}
 
-    return(
+
+return(
     
-        <section>
+    <section>
 
             <form action="">
 
@@ -89,15 +95,20 @@ const Modal = () => {
                     
                     <label htmlFor="">Company name:</label>
                     
-                    <input className={`bg-${state.empty}-300`} type="text" name="company" id="" value={company} onChange={(e)=>{
+                    <input style={{backgroundColor: state.boarder}} type="text" name="company" id="" value={company} onChange={(e)=>{
                         setCompany(e.target.value)
+                        
+                        !e.target.value ?
                         dispatch({
                             type: 'EMPTY'
+                        }):
+                        dispatch({
+                            type: 'ACTIVE'
                         })
                     }}/>
                     <label htmlFor="">role:</label>
-                    <input type="text" name="role"  id="" value={role} onChange={(e)=>{
-                        setRole(e.target.value)
+                    <input type="text" name="role"  id="" value={position} onChange={(e)=>{
+                        setPosition(e.target.value)
                     }}/>
                     <label htmlFor="">link</label>
                     <input type="text" name="link" id="" value={link} onChange={(e)=>{
@@ -130,12 +141,12 @@ const Modal = () => {
 
                 <button type="submit" onClick={(e)=>{
                     e.preventDefault();
-                    handleJobType();
+                    handleJobsNType();
                     setCompany("");
                     setCreatedAt("");
                     setLink("");
                     setMoodTxt("");
-                    setRole("");
+                    setPosition("");
                     setStatus("");
                     setMoodTxt("");
                 }}>Track</button>
@@ -144,32 +155,7 @@ const Modal = () => {
         </section>
 )
 
-
 }
 
 
-const Card = (jobType: JobType) => {
-    
-    const {company, position, link, status, moodTxt, createdAt, rating} = jobType
-
-    return(
-        
-        <section>
-        
-            <p>Company:{company}</p>
-            <p>Position:{position}</p>
-            <p>Link:{link}</p>
-            <p>Applied:{createdAt}</p>
-            <p>Status:{status}</p>
-            <p>Mood:{moodTxt}</p>
-            <p>Rating:{rating}</p>
-
-        </section>
-    )
-
-
-}
-
-
-
-export {Modal, Card}
+export { Modal }
