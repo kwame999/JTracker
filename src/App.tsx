@@ -26,7 +26,7 @@ type Company = {
 
 function App() {
  const [jobs, setJobs] = useState<JobType[]>([])
-
+ const [editJob, setNewEditJob] = useState<JobType | null>(null)
  function handleJobs(newJob: JobType){
 
     setJobs(previous => [...previous, newJob])
@@ -37,15 +37,21 @@ function App() {
     
   setJobs(previous => previous.filter(job => job.id !== id))
   
-
  }
+
+ function handleEditJob(id: string){
+  setNewEditJob(
+    jobs.find(job => id === job.id) ?? null
+  )
+ }
+
   return (
   <>
-  <Modal onAddJob={handleJobs}></Modal>
+  <Modal onAddJob={handleJobs} editingJob={editJob}></Modal>
   
   <Column color='red' name='Active'>
     {jobs.map(job => (
-      <Card key={job.id} job={job} onDelete={handleDeleteJobs}></Card>))};
+      <Card key={job.id} job={job} onDelete={handleDeleteJobs} onEdit={handleEditJob}></Card>))};
     </Column>
     </>
 

@@ -32,6 +32,7 @@ type Company = {
 type CardProps = {
     job: JobType,
     onDelete: (id: string) => void
+    onEdit: (id: string) => void
 }
 
 const Column = ({children, color, name = "grey"}: ColumnProps) => {
@@ -52,7 +53,7 @@ const Column = ({children, color, name = "grey"}: ColumnProps) => {
 
 }
 
-const Card = ({job, onDelete}: CardProps) => {
+const Card = ({job, onDelete, onEdit}: CardProps) => {
     
     const {id, company, position, link, status, moodTxt, createdAt, rating} = job
 
@@ -74,7 +75,11 @@ const Card = ({job, onDelete}: CardProps) => {
                 onDelete(id)
 
             }}>Delete</button>
-            <button>Edit</button>
+            <button onClick={()=>{
+
+                onEdit(id)
+            }}
+            >Edit</button>
         </div>
 
         </section>
