@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react"
+import { useEffect, useReducer, useState } from "react"
 
 type Company = {
     logo: string,
@@ -20,18 +20,30 @@ type JobType = {
 }
 
 type State = {
-    boarder: string;
+    boarder: string,
+};
+type ValueState = {
+    key: string | number
 };
 
 type Action = 
-    | { type: 'EMPTY' }
+      { type: 'EMPTY' }
     | { type: 'ACTIVE' }
-    | { type: 'FILLED' };
+    | { type: 'FILLED' }
+    | { type: 'SET_COMPANY' }
+    | { type: 'SET_POSITION' }
+    | { type: 'SET_STATUS' }
+    | { type: 'SET_LINK' }
+    | { type: 'SET_CREATEDAT' }
+    | { type: 'SET_RATING' }
+    | { type: 'SET_MOODTXT' }
+
 
 type AddJob = (newJob: JobType) => void;
 
 type ModalProps = {
-    onAddJob: AddJob
+    onAddJob: AddJob,
+    editingJob: JobType | null
 }
 
 function inputReducer(state: State, action: Action): State {
@@ -46,7 +58,18 @@ function inputReducer(state: State, action: Action): State {
             return state; 
     }
 }
-const Modal = ({ onAddJob }: ModalProps) => {
+
+function valueReducer(state: ValueState, action: Action): ValueState{
+    switch(action.type){
+        case 'SET_COMPANY':
+        
+    }
+
+    return state
+}
+
+
+const Modal = ({ onAddJob, editingJob }: ModalProps) => {
     
     const [company, setCompany] = useState("");
     const [position, setPosition] = useState("");
@@ -56,9 +79,25 @@ const Modal = ({ onAddJob }: ModalProps) => {
     const [rating, setRating] = useState(0);
     const [moodTxt, setMoodTxt] = useState("");
 
+    const [valueState, dispatchValue] = useReducer(valueReducer, {key: "s"})
     const [state, dispatch] = useReducer(inputReducer, {boarder: "white", 
                                                      })
     
+    useEffect(() => {
+
+    if(!editingJob) return
+
+    const {company, position, status, link, createdAt, rating, moodTxt} = editingJob;
+    
+    setCompany(company);
+    setPosition(position);
+    setStatus(status);
+    setLink(link ?? "");
+    setCreatedAt(createdAt);
+    setRating(rating ?? 0);
+    setMoodTxt(moodTxt)
+
+    },[editingJob])
     function handleJobsNType(){
         
         const newJob: JobType =
