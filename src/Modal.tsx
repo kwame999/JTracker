@@ -41,7 +41,7 @@ type Action =
 
 type AddJob = (newJob: JobType) => void;
 type UpdateJob = (job: JobType) => void;
-type cancelJob = (job: JobType) => void;
+type cancelJob = () => void;
 
 type ModalProps = {
     onAddJob: AddJob,
@@ -204,7 +204,7 @@ return(
                 <button type="submit" onClick={(e)=>{
                     e.preventDefault();
                     jobStatesReset(e);
-
+                    cancelJob()
                 }}>Cancel</button>
             </form>
 
