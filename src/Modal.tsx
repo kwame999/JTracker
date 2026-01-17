@@ -77,7 +77,7 @@ const Modal = ({ onAddJob, editingJob, updateJob, cancelJob }: ModalProps) => {
     
     const [company, setCompany] = useState("");
     const [position, setPosition] = useState("");
-    const [status, setStatus] = useState("");
+    const [status, setStatus] = useState("wishlist");
     const [link, setLink] = useState("");
     const [createdAt, setCreatedAt] = useState("");
     const [rating, setRating] = useState(0);
@@ -131,15 +131,14 @@ const Modal = ({ onAddJob, editingJob, updateJob, cancelJob }: ModalProps) => {
     
 }
 
-function jobStatesReset(e: React.MouseEvent){
+function jobStatesReset(){
     
-    e.preventDefault();
     setCompany("");
     setCreatedAt("");
     setLink("");
     setMoodTxt("");
     setPosition("");
-    setStatus("");
+    setStatus("wishlist");
     
 }
 return(
@@ -196,14 +195,13 @@ return(
                 
                 </select>
 
-                <button type="submit" onClick={(e)=>{
+                <button type="button" onClick={()=>{
                     handleJobsNType();
-                    jobStatesReset(e)
+                    jobStatesReset()
                 }}>{editingJob ? "Save" : "Track"}</button>
                 
-                <button type="submit" onClick={(e)=>{
-                    e.preventDefault();
-                    jobStatesReset(e);
+                <button type="button" onClick={()=>{
+                    jobStatesReset();
                     cancelJob()
                 }}>Cancel</button>
             </form>
