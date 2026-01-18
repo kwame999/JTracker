@@ -1,12 +1,8 @@
 import { useState } from "react"
+
 type HeaderProps = {
     jobProjName: string
 }
-
-// type UserBanner = {
-//     defalt: string,
-//     midnightBlue: string
-// }
 
 const Header = ({jobProjName}: HeaderProps)=> {
 
@@ -16,7 +12,7 @@ const Header = ({jobProjName}: HeaderProps)=> {
     function handleCrntBanner(e: React.ChangeEvent<HTMLInputElement>){
         setCrntBanner(e.target.value)
     }
-    
+
     return(
         <section>
             <div>
@@ -24,7 +20,9 @@ const Header = ({jobProjName}: HeaderProps)=> {
                 <h1>{jobProjName}</h1>
             <svg></svg>
             </div>
-            <><img src={""} alt="Gradient Mesh" /></>
+            <>
+                <img src={crntBanner} alt="Gradient Mesh" />
+            </>
             <fieldset>
                 <input type="radio" name="default" id="" checked={ crntBanner === presetBanners[0] } value={ presetBanners[0] } onChange={(e)=>{
                     handleCrntBanner(e);
