@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {Column, Card} from './Column'
 import { Modal } from './Modal'
-import Tag from './DashAssets'
+import {Tag, TabView} from './DashAssets'
 import './index.css'
 import Header from './Header'
 type JobType = {
@@ -64,7 +64,7 @@ function App() {
     </Column>
 
       <Tag/>
-
+      <TabView/>
     </>
 
     // <Column name='Active'>
