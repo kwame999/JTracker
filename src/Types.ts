@@ -26,6 +26,7 @@ export type ColumnProps = {
     children?: ReactNode,
     color?: string,
     name: string,
+    onShowModal: () => void
 }
 
 

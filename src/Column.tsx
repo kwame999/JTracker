@@ -2,18 +2,20 @@ import { useState } from "react"
 import type { ColumnProps, CardProps, CardPreview } from './Types'
 
 
-const Column = ({children, color, name = "grey"}: ColumnProps) => {
+const Column = ({children, color, name = "grey", onShowModal}: ColumnProps) => {
 
     return(
-        <section>
+        <section className="w-full" style={{backgroundColor: color}} >
             <div className="flex gap-2">{name}
                 <button>fdf</button>
             </div>
-            <div style={{backgroundColor: color}} 
-                         className="flex flex-col">
+            <div className="flex flex-col">
                 {children}
             </div>
-        
+
+            <>
+                <button onClick={onShowModal}>Open</button>
+            </>        
         </section>
         
     )
