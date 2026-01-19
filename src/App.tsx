@@ -1,27 +1,10 @@
 import { useState } from 'react'
 import {Column, Card} from './Column'
 import { Modal } from './Modal'
-import Tag from './DashAssets'
+import {Tag, TabView} from './DashAssets'
 import './index.css'
 import Header from './Header'
-type JobType = {
-    
-    id: string,
-    company: string,
-    companyIcon: Company,
-    position: string,
-    status: string,
-    link?: string,
-    createdAt: string,
-    rating?: number,
-    moodTxt: string,
-    favorites: boolean,
-}
-
-type Company = {
-    logo: string,
-    alt: string
-}
+import type { JobType} from './Types'
 
 
 function App() {
@@ -64,7 +47,7 @@ function App() {
     </Column>
 
       <Tag/>
-
+      <TabView/>
     </>
 
     // <Column name='Active'>
