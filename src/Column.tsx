@@ -57,11 +57,16 @@ const Card = ({job, onDelete, onEdit}: CardProps) => {
 const PreviewCard = ({companyName, jobPosition, jobLink,}: CardPreview) => {
     // const {icon} = companyIcon
     return(
-        <section>
-            <img src={`https://img.logo.dev/${companyName}.com?token=pk_RKtwoXuaQDSJdIEDV1NYVA`} alt="" />
-            <p>Company:{companyName}</p>
-            <p>Position:{jobPosition}</p>
-            <p>Link:{jobLink}</p>
+        <section className="flex w-full bg-red-700 items-center p-5 gap-4 rounded-xl mt-6 mb-4">
+            <img src={`https://img.logo.dev/${companyName}.com?token=pk_RKtwoXuaQDSJdIEDV1NYVA`} alt="" width={80} className="rounded-lg"/>
+                <div className="flex  flex-col">
+                    <p className="font-bold text-lg">{companyName}</p>
+                    <div className="flex justify-between gap-4">
+                        <p><span className="font-medium">Position:</span>{jobPosition}</p>
+                        <p><span className="font-medium">Salary:</span>{jobLink}</p>
+                        <p><span className="font-medium">Applied:</span>{jobLink}</p>
+                    </div>
+                </div>  
         </section>
     )
 
