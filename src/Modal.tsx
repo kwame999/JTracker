@@ -99,7 +99,7 @@ return(
                     <input style={{backgroundColor: state.boarder}} type="text" name="company" id="" value={company} onChange={(e)=>{
 
                         !e.target.value ? dispatch({type: "EMPTY"}) : dispatch({type: "ACTIVE"});
-                        e.target.value && setCompany(e.target.value);
+                        setCompany(e.target.value);
                     }}/>
                     <label htmlFor="">role:</label>
                     <input type="text" name="role"  id="" value={position} onChange={(e)=>{

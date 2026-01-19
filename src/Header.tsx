@@ -4,7 +4,7 @@ import type { HeaderProps } from './Types'
 
 const Header = ({jobProjName}: HeaderProps)=> {
 
-    const presetBanners = ["imagelink1","imagelink2", "imagelink3"]
+    const presetBanners = ["./src/banners/default_0.png","imagelink2", "imagelink3"]
     const [crntBanner, setCrntBanner] = useState(presetBanners[0]);
     
     function handleCrntBanner(e: React.ChangeEvent<HTMLInputElement>){
