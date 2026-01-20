@@ -34,9 +34,9 @@ const Card = ({job, onDelete, onEdit}: CardProps) => {
         <section className="flex flex-col rounded-xl w-128.5">
             
             <div className="flex p-3.5 bg-blue-500 rounded-xl w-full">
-            <img src={logo} alt={alt} width={70} className="rounded-lg mr-3"/>
+            <img src={logo} alt={alt} width={60} className="rounded-lg mr-3"/>
                     <div className="flex  flex-col justify-center w-full">
-                        <p className="font-bold text-lg">{company}</p>
+                        <p className="font-bold text-md">{company}</p>
                         
                         <div className="flex items-center  justify-between">
                             <p><span className=" font-semibold">Position: </span>{position}</p>

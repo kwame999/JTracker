@@ -12,11 +12,11 @@ const Header = ({jobProjName}: HeaderProps)=> {
     }
 
     return(
-        <section>
-            <div>
-                <img src="czxc" alt="" />
-                <h1>{jobProjName}</h1>
-            <svg></svg>
+        <section className="">
+            <div className="flex bg-red-500 p-3.5 justify-between">
+                {/* <img src="czxc" alt="" /> */}
+                <h1 className="text-2xl">{jobProjName}</h1>
+                {/* <svg>s</svg> */}
             </div>
             <>
                 <img src={crntBanner} alt="Gradient Mesh" />

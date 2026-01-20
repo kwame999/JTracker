@@ -5,6 +5,7 @@ import {Tag, TabView} from './DashAssets'
 import './index.css'
 import Header from './Header'
 import type { JobType} from './Types'
+import SideNav from './SideNav'
 
 
 function App() {
@@ -43,8 +44,12 @@ function App() {
  }
 
   return (
-  <>
-  <Header jobProjName='j'></Header>
+  <div className='flex'>
+  <SideNav recentJobs={jobs}></SideNav>
+  <div>
+    
+  
+  <Header jobProjName='jooook'></Header>
 
   {showModal && <Modal 
       
@@ -73,7 +78,8 @@ function App() {
       <p className='bg-twitter-blue'>sadada
 
       </p>
-    </>
+    </div>
+   </div>
 
     // <Column name='Active'>
     // </Column>
