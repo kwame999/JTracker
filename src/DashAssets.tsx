@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, type ReactNode } from "react"
 import type { Tags, StatsBlockProps} from './Types'
 
 const Tag = () => {
@@ -33,8 +33,10 @@ const Tag = () => {
 
 }
 
-
-const TabView = () => {
+type TabViewProps = {
+    children: ReactNode
+}
+const TabView = ({children}: TabViewProps) => {
 
     const tabItems: string[] = ["Kanban View", "Accepted", "Wishlist", "Ghosted"];
     const [Kanban, Accepted, Wishlist, Ghosted] = tabItems
@@ -51,14 +53,16 @@ const TabView = () => {
     return(
         <>        
             <div className="tabs-container">
-                <ul className="tab-nav">
+                <ul className="tab-nav flex gap-6 justify-end">
                     <li onClick={()=>{ handleTab(0) }}>{Kanban}</li>
                     <li onClick={()=>{ handleTab(1) }}>{Accepted}</li>
                     <li onClick={()=>{ handleTab(2) }}>{Wishlist}</li>
                     <li onClick={()=>{ handleTab(3) }}>{Ghosted}</li>
                 </ul>
 
-                <div className="tab-viewport"></div>
+                <div className="tab-viewport flex outline-1 p-2">
+                    {children}
+                </div>
             </div>
 
         </>

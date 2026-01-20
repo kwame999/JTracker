@@ -10,6 +10,7 @@ import type { JobType} from './Types'
 function App() {
  const [jobs, setJobs] = useState<JobType[]>([])
  const [editJob, setNewEditJob] = useState<JobType | null>(null)
+ const [showModal, setShowModal] = useState<boolean>(false)
  function handleJobs(newJob: JobType){
 
     setJobs(previous => [...previous, newJob])
@@ -33,21 +34,45 @@ function App() {
 
  function handleCancelJob(){
   if (editJob) setNewEditJob(null);
+  handleShowModal()
 
+ }
+
+ function handleShowModal(){
+  setShowModal(!showModal? true : false)
  }
 
   return (
   <>
   <Header jobProjName='j'></Header>
-  <Modal onAddJob={handleJobs} editingJob={editJob} updateJob={handleUpdateJob} cancelJob={handleCancelJob}></Modal>
+
+  {showModal && <Modal 
+      
+                onAddJob={handleJobs} 
+                editingJob={editJob} 
+                updateJob={handleUpdateJob} 
+                cancelJob={handleCancelJob}>
+
+                </Modal>
+
+}
   
-  <Column color='red' name='Active'>
+  <TabView>
+
+  <Column color='yellow' name='Active' onShowModal={handleShowModal}>
     {jobs.map(job => (
       <Card key={job.id} job={job} onDelete={handleDeleteJobs} onEdit={handleEditJob}></Card>))};
     </Column>
+    <Column color='red' name='Waiting' onShowModal={handleShowModal}></Column>
+    <Column color='pink' name='Ghosted' onShowModal={handleShowModal}></Column>
+  </TabView>
+
 
       <Tag/>
-      <TabView/>
+      
+      <p className='bg-twitter-blue'>sadada
+
+      </p>
     </>
 
     // <Column name='Active'>

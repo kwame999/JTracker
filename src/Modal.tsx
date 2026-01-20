@@ -23,7 +23,7 @@ const Modal = ({ onAddJob, editingJob, updateJob, cancelJob }: ModalProps) => {
     const [status, setStatus] = useState("wishlist");
     const [link, setLink] = useState("");
     const [createdAt, setCreatedAt] = useState("");
-    const [rating, setRating] = useState(0);
+    const [salary, setSalary] = useState(0);
     const [moodTxt, setMoodTxt] = useState("");
 
     const [state, dispatch] = useReducer(inputReducer, { boarder: "grey", })
@@ -32,14 +32,14 @@ const Modal = ({ onAddJob, editingJob, updateJob, cancelJob }: ModalProps) => {
 
     if(!editingJob) return
 
-    const {company, position, status, link, createdAt, rating, moodTxt} = editingJob;
+    const {company, position, status, link, createdAt, salary, moodTxt} = editingJob;
     
     setCompany(company);
     setPosition(position);
     setStatus(status);
     setLink(link ?? "");
     setCreatedAt(createdAt);
-    setRating(rating ?? 0);
+    setSalary(salary ?? 0);
     setMoodTxt(moodTxt)
 
     },[editingJob])
@@ -59,7 +59,7 @@ const Modal = ({ onAddJob, editingJob, updateJob, cancelJob }: ModalProps) => {
             status: status,
             link: link,
             createdAt: createdAt,
-            rating: rating,
+            salary: salary,
             moodTxt: moodTxt,
             favorites: false,
         }
@@ -88,46 +88,68 @@ function jobStatesReset(){
 }
 return(
     
-    <section>
-
+    <section className="bg-red-300 absolute  p-6 rounded-2xl">
+            <h1 className="text-[28px]  font-bold pb-1.5">Track Job</h1>
             <form action="">
 
-                <div>
-                    
-                    <label htmlFor="">Company name:</label>
-                    
-                    <input style={{backgroundColor: state.boarder}} type="text" name="company" id="" value={company} onChange={(e)=>{
+                <div className="flex flex-col gap-4  text-[17px]">
+                    <div className="flex outline-red-700 outline-2">
+                        <div className="flex flex-col gap-[.4rem]">
+                            <label htmlFor="" className="font-semibold">Company name:</label>
+                            
+                            <input style={{backgroundColor: state.boarder}} className="p-1" type="text" name="company" id="" size={28} value={company} onChange={(e)=>{
 
-                        !e.target.value ? dispatch({type: "EMPTY"}) : dispatch({type: "ACTIVE"});
-                        setCompany(e.target.value);
-                    }}/>
-                    <label htmlFor="">role:</label>
-                    <input type="text" name="role"  id="" value={position} onChange={(e)=>{
+                                !e.target.value ? dispatch({type: "EMPTY"}) : dispatch({type: "ACTIVE"});
+                                setCompany(e.target.value);
+                            }}/>
+                        </div>
+
+                        <div className="flex flex-col gap-[.4rem]">
+                        <label htmlFor="" className="font-semibold">Position:</label>
+                        <input type="text" name="role"  className="p-1" id="" size={28} value={position} onChange={(e)=>{
+                            
+                            !e.target.value ? dispatch({type: "EMPTY"}) : dispatch({type: "ACTIVE"});
+                            setPosition(e.target.value)
+                        }}/>
+                        </div>
+                    </div>
+
+                    <div className="flex gap-[.4rem]  outline-red-700 outline-2">
+                        <div className="flex flex-col gap-[.4rem] ">
+                            <label htmlFor="" className="font-semibold">Salary</label>
+                            <input type="text" name="link" id="" size={28}  className="p-1 bg-green-400" value={link} onChange={(e)=>{
+                                
+                                !e.target.value ? dispatch({type: "EMPTY"}) : dispatch({type: "ACTIVE"});
+                                setLink(e.target.value);
+                            }}/>
+                        </div>
+
+                        <div className="flex flex-col gap-[.4rem]">
+                            <label htmlFor="" className="font-semibold">Created at:</label>
+                            <input type="text" name="date" id="" size={28} className="p-1" value={createdAt} onChange={(e)=>{
+                                
+                                !e.target.value ? dispatch({type: "EMPTY"}) : dispatch({type: "ACTIVE"});
+                                setCreatedAt(e.target.value);
+                            }}/>
+                        </div>
+                    </div>
+                    
+                    {/* <label htmlFor="" className="text-base">Link</label>
+                    <input type="text" name="date" id="" size={28} className="p-1" value={""} onChange={()=>{
                         
-                        !e.target.value ? dispatch({type: "EMPTY"}) : dispatch({type: "ACTIVE"});
-                        setPosition(e.target.value)
-                    }}/>
-                    <label htmlFor="">link</label>
-                    <input type="text" name="link" id="" value={link} onChange={(e)=>{
-                        
-                        !e.target.value ? dispatch({type: "EMPTY"}) : dispatch({type: "ACTIVE"});
-                        setLink(e.target.value);
-                    }}/>
-                    <label htmlFor="">Created at:</label>
-                    <input type="text" name="date" id="" value={createdAt} onChange={(e)=>{
-                        
-                        !e.target.value ? dispatch({type: "EMPTY"}) : dispatch({type: "ACTIVE"});
-                        setCreatedAt(e.target.value);
-                    }}/>
-                    <label htmlFor="mood"></label>
+                  
+                    }}/> */}
                 
                 </div>
 
-                <textarea name="moodMsg" id="" value={moodTxt} onChange={(e)=>{
-                    
-                    !e.target.value ? dispatch({type: "EMPTY"}) : dispatch({type: "ACTIVE"});
-                    setMoodTxt(e.target.value);
-                }}></textarea>
+                <div className="flex flex-col gap-[.4rem]">
+                    <label htmlFor="mood" className=" text-[17px] font-semibold pt-5">Note</label>
+                    <textarea name="moodMsg" id="" value={moodTxt} onChange={(e)=>{
+                        
+                        !e.target.value ? dispatch({type: "EMPTY"}) : dispatch({type: "ACTIVE"});
+                        setMoodTxt(e.target.value);
+                    }} rows={4} className=" bg-yellow-300"></textarea>
+                </div>
 
                 <select name="status" id="" onChange={(e)=>{
                     
@@ -144,16 +166,18 @@ return(
                 
                 </select>
 
-                <PreviewCard companyName={company} jobPosition={position} jobLink={link}></PreviewCard>
-                <button type="button" onClick={()=>{
-                    handleJobsNType();
-                    jobStatesReset()
-                }}>{editingJob ? "Save" : "Track"}</button>
+                <PreviewCard companyName={company} jobPosition={position} jobLink={link} jobSalary={salary}></PreviewCard>
+               <div className="bg-green-500 flex w-full">
+                   <button type="button" onClick={()=>{
+                       jobStatesReset();
+                       cancelJob()
+                   }} className="bg-amber-500 w-full p-3">Cancel</button>
+                    <button type="button" onClick={()=>{
+                        handleJobsNType();
+                        jobStatesReset()
+                    }}className="w-full">{editingJob ? "Save" : "Track"}</button>
                 
-                <button type="button" onClick={()=>{
-                    jobStatesReset();
-                    cancelJob()
-                }}>Cancel</button>
+                </div>
             </form>
 
         </section>

@@ -9,7 +9,7 @@ export type JobType = {
     status: string,
     link?: string,
     createdAt: string,
-    rating?: number,
+    salary?: number,
     moodTxt: string,
     favorites: boolean,
 }
@@ -26,6 +26,7 @@ export type ColumnProps = {
     children?: ReactNode,
     color?: string,
     name: string,
+    onShowModal: () => void
 }
 
 
@@ -39,6 +40,7 @@ export type CardPreview = {
     companyName: string,
     jobPosition: string,
     jobLink: string
+    jobSalary: number
 }
 
 //Dash assets
