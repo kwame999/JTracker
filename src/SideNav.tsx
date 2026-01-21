@@ -1,6 +1,6 @@
 import { useState } from "react"
 import type { SideNavProps } from './Types'
-
+import IconSet from "./icons/icon"
 
 const SideNav = ({recentJobs}:SideNavProps) => {
 
@@ -17,15 +17,21 @@ const SideNav = ({recentJobs}:SideNavProps) => {
 
     return(
 
-        <aside onClick={handleSwitchNav}><div><svg>xx</svg>
-            
-            {isExpanded && <h3>Dashboard</h3>}</div>
+        <aside onClick={handleSwitchNav} className="flex flex-col outline-1 outline-red-600 h-screen px-2.5 pt-4 pb-4 gap-11 justify-center bg-amber-400">
+            <div className="flex justify-between gap-18 items-center">
+                
+                {isExpanded && <h3>Dashboard</h3>}
+                <IconSet iconName="barleft" size={24}></IconSet>
+
+            </div>
+
+
             {isExpanded && <nav> 
                                 <ul>
                                     <li>Tracked Jobs:</li>{recentJobs.map(job =>  <li>{job.company}</li> )}
                                 </ul> 
                           </nav>}
-            <button onClick={ handleSwitch }>{ !modeIcon ? <svg>sun</svg> : <svg>Moon</svg> }</button>
+            <button  className="mt-auto" onClick={ handleSwitch }>{ !modeIcon ? <IconSet iconName="sun" size={24}/> : <IconSet iconName="moon" size={24}/> }</button>
 
         </aside>
         

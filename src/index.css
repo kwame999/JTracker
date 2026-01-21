@@ -3,3 +3,15 @@
 @theme {
 --color-twitter-blue: #000000
 }
+
+*, *::before, *::after {
+  box-sizing: border-box; 
+
+}
+
+html, body {
+  height: 100%;
+  -webkit-font-smoothing: antialiased; 
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
