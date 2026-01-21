@@ -7,7 +7,7 @@ const Column = ({children, color, name = "grey", onShowModal}: ColumnProps) => {
     return(
         <section className="p-3 rounded-t-xl rounded-b[18px] outline-1 outline-amber-950" style={{backgroundColor: color}} >
             <div className="flex justify-between mb-2 font-bold">{name}
-                <button>fdf</button>
+                <button className="flex justify-center"> <IconSet iconName="moreHorizontal" size={18}></IconSet> </button>
             </div>
             <div className="flex flex-col">
                 {children}

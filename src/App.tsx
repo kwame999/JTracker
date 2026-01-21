@@ -44,17 +44,19 @@ function App() {
  }
 
   return (
-  <div className='flex'>
+  <div className='flex h-screen overflow-hidden'>
   <SideNav recentJobs={jobs}></SideNav>
-  <div>
+ 
+  <div className='w-full'>
     
-  
   <Header jobProjName='jooook' jobProjDetails = {jobs}></Header>
-  <div className='flex gap-6'>
-    <StatBlock svgType='yes' statTxt='Created At:' data={Date.now()}></StatBlock>
-    <StatBlock svgType='yes' statTxt='Jobs Tracked:' data={jobs.length}></StatBlock>
+  <div className='ml-3.5 flex flex-col gap-2'>
+      <div className='flex gap-6'>
+        <StatBlock svgType='yes' statTxt='Created At:' data={Date.now()}></StatBlock>
+        <StatBlock svgType='yes' statTxt='Jobs Tracked:' data={jobs.length}></StatBlock>
+      </div>
+      <StatBlock svgType='yes' statTxt='Tags:' data={"ux"}></StatBlock>
   </div>
-    <StatBlock svgType='yes' statTxt='Tags:' data={"ux"}></StatBlock>
 
   {showModal && <Modal 
       
