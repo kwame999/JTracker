@@ -59,6 +59,7 @@ const Modal = ({ onAddJob, editingJob, updateJob, cancelJob }: ModalProps) => {
             status: status,
             link: link,
             createdAt: createdAt,
+            date: new Date,
             salary: salary,
             moodTxt: moodTxt,
             favorites: false,

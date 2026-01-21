@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {Column, Card} from './Column'
 import { Modal } from './Modal'
-import {Tag, TabView} from './DashAssets'
+import {Tag, TabView, StatBlock} from './DashAssets'
 import './index.css'
 import Header from './Header'
 import type { JobType} from './Types'
@@ -49,7 +49,12 @@ function App() {
   <div>
     
   
-  <Header jobProjName='jooook'></Header>
+  <Header jobProjName='jooook' jobProjDetails = {jobs}></Header>
+  <div className='flex gap-6'>
+    <StatBlock svgType='yes' statTxt='Created At:' data={Date.now()}></StatBlock>
+    <StatBlock svgType='yes' statTxt='Jobs Tracked:' data={jobs.length}></StatBlock>
+  </div>
+    <StatBlock svgType='yes' statTxt='Tags:' data={"ux"}></StatBlock>
 
   {showModal && <Modal 
       
@@ -68,10 +73,15 @@ function App() {
     {jobs.map(job => (
       <Card key={job.id} job={job} onDelete={handleDeleteJobs} onEdit={handleEditJob}></Card>))};
     </Column>
-    <Column color='red' name='Waiting' onShowModal={handleShowModal}></Column>
-    <Column color='pink' name='Ghosted' onShowModal={handleShowModal}></Column>
+    <Column color='red' name='Waiting' onShowModal={handleShowModal}>
+        {jobs.map(job => (
+      <Card key={job.id} job={job} onDelete={handleDeleteJobs} onEdit={handleEditJob}></Card>))};
+    </Column>
+    <Column color='pink' name='Ghosted' onShowModal={handleShowModal}>
+       {jobs.map(job => (
+      <Card key={job.id} job={job} onDelete={handleDeleteJobs} onEdit={handleEditJob}></Card>))};
+    </Column>
   </TabView>
-
 
       <Tag/>
       

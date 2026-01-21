@@ -60,7 +60,7 @@ const TabView = ({children}: TabViewProps) => {
                     <li onClick={()=>{ handleTab(3) }}>{Ghosted}</li>
                 </ul>
 
-                <div className="tab-viewport flex outline-1 p-2">
+                <div className="tab-viewport flex outline-1 p-3.5 gap-7 p">
                     {children}
                 </div>
             </div>
@@ -87,16 +87,17 @@ const TabView = ({children}: TabViewProps) => {
 // }
 
 
-const StatBlock = ({svgType, statTxt, children}: StatsBlockProps) => {
+const StatBlock = ({svgType, statTxt, children, data}: StatsBlockProps) => {
 
 
     return(
 
         <div>
-            <>
-            <svg>{svgType}</svg>
+            <div className="flex items-center">
+            <svg height={40} width={40} className=" outline-1">{svgType}</svg>
             <p>{statTxt}</p>
-            </>
+            <p>{data}</p>
+            </div>
             {children}
         </div>
 

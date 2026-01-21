@@ -17,7 +17,7 @@ const SideNav = ({recentJobs}:SideNavProps) => {
 
     return(
 
-        <aside onClick={handleSwitchNav} className="flex flex-col outline-5 h-screen p-3 gap-11 justify-center pt-7">
+        <aside onClick={handleSwitchNav} className="flex flex-col outline-1 outline-red-600 h-screen px-2.5 pt-4 pb-4 gap-11 justify-center bg-amber-400">
             <div className="flex justify-between gap-18 items-center">
                 
                 {isExpanded && <h3>Dashboard</h3>}

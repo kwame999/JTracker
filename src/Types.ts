@@ -12,6 +12,7 @@ export type JobType = {
     salary?: number,
     moodTxt: string,
     favorites: boolean,
+    date: Date
 }
 
 export type Company = {
@@ -49,11 +50,14 @@ export type Tags = string
 export type StatsBlockProps = {
         svgType: string,
         statTxt: string,
-        children: React.ReactNode
+        children?: React.ReactNode,
+        data: any
+
 }
 //Header assets (DashAssets.tsx)
 export type HeaderProps = {
     jobProjName: string
+    jobProjDetails: JobType[]
 }
 
 //Modal assets (Modal.tsx)
