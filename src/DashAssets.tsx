@@ -42,19 +42,19 @@ const Tag = () => {
 
             <>
 
-            <div className="flex  bg-red-700 min-w-140 max-w-140 p-2">
+            <div className="flex bg-red-700 min-w-140 max-w-140 p-2">
                 
-             <div key={""} className="flex gap-3 overflow-x-scroll w-full"> 
-                {tagTypes.map(tag => 
+             <div className="flex gap-3 overflow-x-scroll w-full"> 
+                    { tagTypes.map((tag, indx) => 
 
-                    <div className="flex gap-1 outline-1 bg-amber-50">
-                    <button onClick={()=>{
-                        handleDeleteTag(0+1)
-                    }}>X</button>
-                    <h4>{tag}</h4> 
-                    </div>
+                        <div className="flex gap-1 outline-1 bg-amber-50 p-1" key={`${indx}`}>
+                            <button onClick={()=>{ handleDeleteTag(indx) }}>
+                                <IconSet iconName="plus" size={18}></IconSet>
+                            </button>
+                            <h4>{tag}</h4> 
+                        </div>
 
-                )}
+                    )}
                 </div>
             
                 <input type="text" className="ml-auto" value={tag} onChange={(e)=>{ setTag(e.target.value)}} onKeyDown={(e)=>{
@@ -74,6 +74,8 @@ type TabViewProps = {
     children: ReactNode
     data: any
 }
+
+
 const TabView = ({children, data}: TabViewProps) => {
 
     const tabItems: string[] = ["Kanban View", "Accepted", "Wishlist", "Ghosted"];
