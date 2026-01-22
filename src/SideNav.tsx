@@ -1,6 +1,6 @@
 import { useState } from "react"
 import type { SideNavProps } from './Types'
-import IconSet from "./icons/icon"
+import {IconSet} from "./icons/icon"
 
 const SideNav = ({recentJobs}:SideNavProps) => {
 

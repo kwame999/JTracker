@@ -3,7 +3,7 @@ import {Column, Card} from './Column'
 import { Modal } from './Modal'
 import {Tag, TabView, StatBlock} from './DashAssets'
 import './index.css'
-import Header from './Header'
+import {Header} from './Header'
 import type { JobType} from './Types'
 import SideNav from './SideNav'
 
@@ -50,13 +50,7 @@ function App() {
   <div className='w-full'>
     
   <Header jobProjName='jooook' jobProjDetails = {jobs}></Header>
-  <div className='ml-3.5 flex flex-col gap-2'>
-      <div className='flex gap-6'>
-        <StatBlock svgType='yes' statTxt='Created At:' data={Date.now()}></StatBlock>
-        <StatBlock svgType='yes' statTxt='Jobs Tracked:' data={jobs.length}></StatBlock>
-      </div>
-      <StatBlock svgType='yes' statTxt='Tags:' data={"ux"}></StatBlock>
-  </div>
+
 
   {showModal && <Modal 
       
@@ -69,20 +63,20 @@ function App() {
 
 }
   
-  <TabView>
+  <TabView data={jobs}>
 
   <Column color='yellow' name='Active' onShowModal={handleShowModal}>
-    {jobs.map(job => (
-      <Card key={job.id} job={job} onDelete={handleDeleteJobs} onEdit={handleEditJob}></Card>))};
+    {jobs.map(job => (<Card key={job.id} job={job} onDelete={handleDeleteJobs} onEdit={handleEditJob}></Card>))};
+  </Column>
+
+  <Column color='red' name='Waiting' onShowModal={handleShowModal}>
+      {jobs.map(job => ( <Card key={job.id} job={job} onDelete={handleDeleteJobs} onEdit={handleEditJob}></Card>))};
+  </Column>
+
+  <Column color='pink' name='Ghosted' onShowModal={handleShowModal}>
+  {jobs.map(job => (<Card key={job.id} job={job} onDelete={handleDeleteJobs} onEdit={handleEditJob}></Card>))};
     </Column>
-    <Column color='red' name='Waiting' onShowModal={handleShowModal}>
-        {jobs.map(job => (
-      <Card key={job.id} job={job} onDelete={handleDeleteJobs} onEdit={handleEditJob}></Card>))};
-    </Column>
-    <Column color='pink' name='Ghosted' onShowModal={handleShowModal}>
-       {jobs.map(job => (
-      <Card key={job.id} job={job} onDelete={handleDeleteJobs} onEdit={handleEditJob}></Card>))};
-    </Column>
+    
   </TabView>
 
       <Tag/>

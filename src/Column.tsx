@@ -1,11 +1,11 @@
 import { useState } from "react"
 import type { ColumnProps, CardProps, CardPreview } from './Types'
-import IconSet from "./icons/icon"
+import { IconSet } from "./icons/icon"
 
 const Column = ({children, color, name = "grey", onShowModal}: ColumnProps) => {
 
     return(
-        <div className="flex flex-col h-100 overflow-hidden outline-1 rounded-t-[14px] rounded-b[18px]">
+        <div className="flex flex-col h-full overflow-hidden outline-1 rounded-t-3xl rounded-b[18px]">
         <section className="h-100 overflow-hidden p-3 " style={{backgroundColor: color}} >
             <div className="flex justify-between mb-2.5 font-extrabold tracking-wide">{name}
                 <button className="flex justify-center"> <IconSet iconName="moreHorizontal" size={18}></IconSet> </button>
