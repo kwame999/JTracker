@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { icons } from './icons/icon';
 
 export type JobType = {
     
@@ -9,7 +10,7 @@ export type JobType = {
     status: string,
     link?: string,
     createdAt: string,
-    salary?: number,
+    salary?: string | number | any,
     moodTxt: string,
     favorites: boolean,
     date: Date
@@ -41,15 +42,17 @@ export type CardPreview = {
     companyName: string,
     jobPosition: string,
     jobLink: string
-    jobSalary: number
+    jobSalary: string | number
 }
 
 //Dash assets
 export type Tags = string
+type IconName = keyof typeof icons;
 
 export type StatsBlockProps = {
-        svgType: string,
+        svgType: IconName
         statTxt: string,
+        svgSize: number
         children?: React.ReactNode,
         data: any
 
@@ -57,7 +60,7 @@ export type StatsBlockProps = {
 //Header assets (DashAssets.tsx)
 export type HeaderProps = {
     jobProjName: string
-    jobProjDetails: JobType[]
+    jobProjDetails?: JobType[]
 }
 
 //Modal assets (Modal.tsx)
