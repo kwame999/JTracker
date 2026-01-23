@@ -2,7 +2,7 @@ import { useState, type ReactNode } from "react"
 import type { Tags, StatsBlockProps} from './Types'
 import { IconSet } from "./icons/icon";
 import './index.css'
-
+import type { TabViewProps } from "./Types";
 const Tag = () => {
 
     const [tagTypes, setTagTypes] = useState<Tags[]>([]);
@@ -77,13 +77,9 @@ const Tag = () => {
 
 }
 
-type TabViewProps = {
-    children: ReactNode
-    data: any
-}
 
 
-const TabView = ({children, data}: TabViewProps) => {
+const TabView = ({children, data, jobs, onShowModal}: TabViewProps) => {
 
     const tabItems: string[] = ["Kanban View", "Accepted", "Wishlist", "Ghosted"];
     const [Kanban, Accepted, Wishlist, Ghosted] = tabItems
@@ -117,9 +113,25 @@ const TabView = ({children, data}: TabViewProps) => {
                     </ul>
                 </div>
 
-                <div className="tab-viewport flex  gap-7  justify-between overflow-x-scroll px-2">
-                    {children}
-                </div>
+                {jobs.length ? <div className="tab-viewport flex  gap-7  justify-between overflow-x-scroll px-2">{children}</div> 
+                             : <div className="flex flex-col w-full items-center justify-center"> <img src="\src\assets\flat-briefcase-icon-by-Vexels 1.png" alt="" />
+                             
+                             
+                                    <div className="flex center flex-col items-center gap-2">
+                                        <h1 className="text-2xl font-bold">No Jobs Tracked...</h1>
+                                        <p>Add jobs to track your journey and see your growth!</p>
+
+                                        <div className="w-full flex justify-center items-center">
+
+                                            <button className=" bg-gray-300 p-2 w-[40%] rounded-lg font-bold" onClick={ onShowModal }>Track</button>
+                                        
+                                        </div>
+                                    </div>
+                             
+                             </div> }
+                                    
+                                    
+               
             </div>
 
         </>

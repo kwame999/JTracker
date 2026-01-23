@@ -54,7 +54,7 @@ const Card = ({job, onDelete, onEdit}: CardProps) => {
     return(
         <section className="flex flex-col rounded-xl min-w-134.5">
             
-            <div className="flex p-4 bg-card-main rounded-xl w-full text-text-header2">
+            <div className="flex p-4 bg-card-main rounded-xl w-full text-text-header2 shadow-[0px_4px_12px_0px_rgba(0,0,0,0.17)]">
             <img src={logo} alt={alt} width={55} className="rounded-lg mr-3 outline-1 outline-main-outline"/>
                     <div className="flex  flex-col justify-center w-full">
                         <p className=" font-semibold text-md ml-1 text-text-header">{company}</p>
@@ -64,13 +64,21 @@ const Card = ({job, onDelete, onEdit}: CardProps) => {
                                 <p><span className=" font-semibold tracking-[.2px] text-text-header">Position: </span>{position}</p>
                             </IconSet>
 
+                            {salary &&
+                            
                             <IconSet iconName="money" size={18}>
                                 <p><span className="font-semibold text-text-header">Salary: </span>{salary}</p>
                             </IconSet>
+                            
+                            }
 
+                            {createdAt &&
+                            
                             <IconSet iconName="calender" size={18}>
-                                <p><span className="font-semibold text-text-header">Applied: </span>{link}</p>
+                                <p><span className="font-semibold text-text-header">Applied: </span>{createdAt}</p>
                             </IconSet>
+                            
+                            }
 
                         <button onClick={ handleOpen } className="ml-auto">
                             { !isOpen ? <IconSet iconName="cheveronDown" size={16}></IconSet> :

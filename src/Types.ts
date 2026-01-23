@@ -96,3 +96,9 @@ export type ModalProps = {
 }
 
 
+export type TabViewProps = {
+    children: ReactNode
+    data: any
+    jobs: JobType[]
+    onShowModal: () => void
+}

@@ -63,8 +63,10 @@ function App() {
 
 }
   
-  <TabView data={jobs}>
+  <TabView data={jobs} jobs={jobs} onShowModal = {handleShowModal}>
 
+    
+  {jobs.length > 0 && <>
   <Column color='' name='Active' onShowModal={handleShowModal}>
     {jobs.map(job => (<Card key={job.id} job={job} onDelete={handleDeleteJobs} onEdit={handleEditJob}></Card>))};
   </Column>
@@ -76,7 +78,8 @@ function App() {
   <Column color='pink' name='Ghosted' onShowModal={handleShowModal}>
   {jobs.map(job => (<Card key={job.id} job={job} onDelete={handleDeleteJobs} onEdit={handleEditJob}></Card>))};
     </Column>
-    
+    </>
+    }
   </TabView>
 
       {/* <Tag/>
