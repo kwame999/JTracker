@@ -1,17 +1,30 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {Column, Card} from './Column'
 import { Modal } from './Modal'
-import {Tag, TabView, StatBlock} from './DashAssets'
+import {Tag, TabView, StatBlock, ModalNewContainer} from './DashAssets'
 import './index.css'
 import {Header} from './Header'
 import type { JobType} from './Types'
 import SideNav from './SideNav'
+import { IconSet } from './icons/icon'
 
+type CustomContainerT = {
+  containerName: string,
+  containerColor?: string,
+}
 
 function App() {
  const [jobs, setJobs] = useState<JobType[]>([])
  const [editJob, setNewEditJob] = useState<JobType | null>(null)
  const [showModal, setShowModal] = useState<boolean>(false)
+ const [showNewModal, setShowNewModal] = useState<boolean>(false)
+ const [customContainer, setCustomContainer] = useState<CustomContainerT[]>([])
+
+
+ function handleContainer(newContainer: CustomContainerT){
+  setCustomContainer(prev => [...prev, newContainer])
+ }
+
  function handleJobs(newJob: JobType){
 
     setJobs(previous => [...previous, newJob])
@@ -43,65 +56,101 @@ function App() {
   setShowModal(!showModal? true : false)
  }
 
+  function handleNewModal(){
+  setShowNewModal(!showNewModal? true : false)
+ }
+
+function jobStatusTypeCheck(jobStatus: string){
+  
+  return jobs.some(job => job.status === jobStatus)
  
+}
+
+function renderFilteredJob(jobStatus: string){
+          
+  return jobs.filter(jobs => jobs.status === jobStatus)
+      .map(job => ( <Card key={job.id} 
+                          job={job} 
+                          onDelete={handleDeleteJobs} 
+                          onEdit={handleEditJob}></Card>) ) 
+}
 
   return (
   <div className='flex h-screen overflow-hidden bg-main-bgs'>
-  {showModal &&  
+        
+        {showModal &&  
+                          
+                  
+                          <Modal 
+                
+                          onAddJob={handleJobs} 
+                          editingJob={editJob} 
+                          updateJob={handleUpdateJob} 
+                          cancelJob={handleCancelJob}
+                          onAddCustomCol={customContainer}>
+                          
+                          </Modal>
                     
-                    <>
-                    <Modal 
-          
-                    onAddJob={handleJobs} 
-                    editingJob={editJob} 
-                    updateJob={handleUpdateJob} 
-                    cancelJob={handleCancelJob}>
+        }
 
-                    </Modal>
-                    <div className='bg-black/50 p-40 absolute w-full h-full backdrop-blur-[1px] flex justify-center items-center'></div>
-                    </>
-
-               
-
-}
   <SideNav recentJobs={jobs}></SideNav>
  
   <div className='w-full'>
     
-  <Header jobProjName='UX-Hunt 2026' jobProjDetails = {jobs}></Header>
+    <Header jobProjName='UX-Hunt 2026' jobProjDetails = {jobs}></Header>
+    <TabView data={jobs} jobs={jobs} onShowModal = {handleShowModal}>
 
 
+  {jobs.length && <div className=' flex gap-8 h-[64vh] justify-center w-full'>
+ 
+                    { jobStatusTypeCheck('ghosted') && <Column color='' name='Ghosted' onShowModal={handleShowModal}>
+                                                        { renderFilteredJob('ghosted') }
+                                                    </Column> }
   
-  <TabView data={jobs} jobs={jobs} onShowModal = {handleShowModal}>
+                    { jobStatusTypeCheck('applied') && <Column color='' name='Applied' onShowModal={handleShowModal}>
+                                                        { renderFilteredJob('applied') }
+                                                    </Column> }
 
-    
-  {jobs.length > 0 && <div className=' flex gap-8 h-[64vh] justify-center w-full'>
-  <Column color='' name='Active' onShowModal={handleShowModal}>
-    {jobs.map(job => (<Card key={job.id} job={job} onDelete={handleDeleteJobs} onEdit={handleEditJob}></Card>))};
-  </Column>
+                    { jobStatusTypeCheck('wishlist') && <Column color='' name='Wished' onShowModal={handleShowModal}>
+                                                        { renderFilteredJob('wishlist') }
+                                                    </Column> }
 
-  <Column color='red' name='Waiting' onShowModal={handleShowModal}>
-      {jobs.map(job => ( <Card key={job.id} job={job} onDelete={handleDeleteJobs} onEdit={handleEditJob}></Card>))};
-  </Column>
+                    { jobStatusTypeCheck('interview') && <Column color='' name='Interview' onShowModal={handleShowModal}>
+                                                          { renderFilteredJob('interview') }
+                                                        </Column> }
 
-  <Column color='pink' name='Ghosted' onShowModal={handleShowModal}>
-  {jobs.map(job => (<Card key={job.id} job={job} onDelete={handleDeleteJobs} onEdit={handleEditJob}></Card>))};
-    </Column>
-    </div>
-    }
-    
+                    { jobStatusTypeCheck('offer') && <Column color='' name='Offer' onShowModal={handleShowModal}>
+                                                        { renderFilteredJob('offer') }
+                                                    </Column> }
+
+                    { jobStatusTypeCheck('rejected') && <Column color='' name='Rejected' onShowModal={handleShowModal}>
+                                                        { renderFilteredJob('rejected') }
+                                                        </Column> }
+                        
+
+                  </div>}
+            
+          {customContainer.map(container => <Column  name={container.containerName} onShowModal={handleShowModal}></Column>)}
+          
+          
+          <div className=' bg-transparent flex p-2  rounded-[1000px] font-medium'>
+          {/* <Column color='' name="" onShowModal={()=> true }> 
+          <div className='w-full bg-red-400'></div>
+          <button>fgd</button>
+          </Column> */}
+              <button  className='flex flex-col items-center justify-center text-gray-600' onClick={handleNewModal}>Container
+                <IconSet iconName='plus' size={28}></IconSet>
+              </button>
+          </div>
+
+          
+          {  showNewModal &&  <ModalNewContainer setNewContainer={handleContainer}></ModalNewContainer>  }
+            
   </TabView>
+  </div>
+  </div>
 
-      {/* <Tag/>
-      
-      <p className='bg-twitter-blue'>sadada
 
-      </p> */}
-    </div>
-   </div>
-
-    // <Column name='Active'>
-    // </Column>
   )
 }
 
