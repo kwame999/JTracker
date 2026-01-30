@@ -147,7 +147,7 @@ function handleCurrentColumn(colName: string){
                         
 
                     {customContainer.map(container => <Column  name={container.containerName} onShowModal={handleShowModal} onCurrentCol={handleCurrentColumn}>
-                                                      {renderFilteredJob(container.containerName)}
+                                                      {renderFilteredJob(container.containerName.toLowerCase())}
                                                       </Column>)}
                     
                   </div>}

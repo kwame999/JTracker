@@ -188,66 +188,76 @@ setNewContainer: (container: CustomContainerT) => void
 }
 
 const ModalNewContainer = ({setNewContainer}: ModalNewContainerProps) => {
-    
-  const [showNewModal, setShowNewModal] = useState<boolean>(true)
-  const [containerName, setContainerName] = useState<string>("")
-//   const [containerColor, setContainerColor] = useState<string>("")
 
-  function handleNewModal(){
-  setShowNewModal(!showNewModal && false)
- }
-    
- function handleNewContainer(){
+    const [containerName, setContainerName] = useState<string>("");
+    const [isVisible, setIsVisible] = useState(true);
 
-    const newContainer = {
+    const handleInternalClose = () => {
+        setIsVisible(false);
+    };
 
-        containerName: containerName,
-        // containerColor: containerName,
+    function onSubmit() {
+        if (!containerName.trim()) return;
+        setNewContainer({ containerName: containerName });
+        handleInternalClose();
     }
 
-    setNewContainer(newContainer);
+    if (!isVisible) return null;
 
- }
+    return (
+        <>
+            <div className='fixed inset-0 bg-black/30 backdrop-blur-[2px] z-[999]' onClick={handleInternalClose}></div>
 
-    return(
-
-    showNewModal && (
-        <form className=" absolute bg-red-400 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-3 ">
-            <div className=" flex justify-between">
-            <h1>Name</h1>
-            <button onClick={(e)=> {
-                e.preventDefault();
-                handleNewModal();
-            }}>
-                <IconSet iconName="close" size={18}></IconSet>
-W            </button>
-            </div>
-            <input type="text" name="projName" id="" onChange={(e)=>{
-                setContainerName(e.target.value)
-            }} />
-       
-            <div>
-                Container color
-
-                <ul className="flex justify-evenly">
-                    <li>fdsfs</li>    
-                    <li>fdsfs</li>    
-                    <li>fdsfs</li>    
-                </ul>                
-            </div>
-        
-            <button className="p-2 bg-red-500" onClick={(e)=>{
+            <section className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-[440px] bg-white rounded-[16px] shadow-[0_20px_60px_rgba(0,0,0,0.3),0_0_1px_rgba(0,0,0,0.1)] z-[1000] flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
                 
-                e.preventDefault();
-                handleNewContainer();
-                handleNewModal();
+                <div className="pt-[28px] px-[32px] pb-[24px] border-b border-[#F0F0F0] relative">
+                    <button className="absolute right-[24px] top-[24px] w-[32px] h-[32px] rounded-[8px] flex items-center justify-center hover:bg-gray-100 transition-colors"
+                            onClick={handleInternalClose}>
+                        <IconSet iconName="close" size={16}/>
+                    </button>
+                    <h2 className="text-[22px] font-bold text-[#0A0A0A] leading-[1.3] tracking-[-0.02em]">
+                        Add New Column
+                    </h2>
+                    <p className="mt-[6px] text-[14px] text-[#737373] leading-[1.5]">
+                        Create a custom stage for your job tracking pipeline.
+                    </p>
+                </div>
 
-            }}>Create</button>
+                <div className="p-[32px] pt-[28px] flex flex-col gap-[24px]">
+                    <div className="flex flex-col gap-[6px]">
+                        <label className="text-[13px] font-semibold text-[#1A1A1A]">Column Name</label>
+                        <input 
+                            autoFocus
+                            placeholder="e.g., Follow-up Required"
+                            className="w-full h-[40px] px-[14px] bg-white border-[1.5px] border-[#E5E5E5] rounded-[8px] text-[14px] outline-none focus:border-black transition-all"
+                            type="text" 
+                            value={containerName} 
+                            onChange={(e) => setContainerName(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && onSubmit()}
+                        />
+                    </div>
+                </div>
 
-        </form>
-    )
-)
-}
+                <div className="px-[32px] py-[24px] border-t border-[#F0F0F0] flex gap-[12px] bg-white">
+                    <button 
+                        type="button" 
+                        onClick={handleInternalClose} 
+                        className="flex-1 h-[44px] bg-white border-[1.5px] border-[#E5E5E5] rounded-[8px] text-[15px] font-semibold text-[#404040] hover:bg-gray-50 transition-colors"
+                    >
+                        Cancel
+                    </button>
+                    <button 
+                        type="button" 
+                        onClick={onSubmit}
+                        className="flex-1 h-[44px] bg-[#0A0A0A] border-none rounded-[8px] text-[15px] font-semibold text-white shadow-[0_1px_2px_rgba(0,0,0,0.1)] hover:bg-[#262626] transition-colors"
+                    >
+                        Create Column
+                    </button>
+                </div>
+            </section>
+        </>
+    );
+};
 
 
 
