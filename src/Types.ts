@@ -10,7 +10,7 @@ export type JobType = {
     status: string,
     link?: string,
     createdAt: string,
-    salary?: string | number | any,
+    salary?: string | number
     moodTxt: string,
     favorites: boolean,
     date: Date
@@ -29,6 +29,7 @@ export type ColumnProps = {
     color?: string,
     name: string,
     onShowModal: () => void
+    onCurrentCol: (colName: string) => void
 }
 
 
@@ -63,6 +64,8 @@ export type HeaderProps = {
     jobProjDetails?: JobType[]
     handleNewTag: (tag: Tags[]) => void
     tagTypes: Tags[]
+    isCollapsed?: boolean
+    
 }
 
 //Modal assets (Modal.tsx)
@@ -96,6 +99,8 @@ export type ModalProps = {
     updateJob:  UpdateJob,
     cancelJob: cancelJob
     onAddCustomCol: CustomContainerT[]
+    currentCol: string
+    onSetCurrentCol: (colName: string) => void
 }
 
 
@@ -105,6 +110,8 @@ export type TabViewProps = {
     jobs: JobType[]
     onShowModal: () => void
     tags: Tags[]
+    onHandleTab: (currentTab: string) => void
+    tabActive: string
  
 }
 
