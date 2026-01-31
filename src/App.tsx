@@ -20,7 +20,7 @@ function App() {
  const [showNewModal, setShowNewModal] = useState<boolean>(false)
  const [customContainer, setCustomContainer] = useState<CustomContainerT[]>([])
  const [tagTypes, setTagTypes] = useState<Tags[]>([]);
- const [tabActive, setTabActive] = useState<string>("");
+ const [tabActive, setTabActive] = useState<string>('Dashboard');
  const [currentColumn, setCurrentColumn] = useState<string>('')
 
   console.log(currentColumn)

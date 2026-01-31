@@ -21,7 +21,7 @@ const Column = ({children, color, name, onShowModal, onCurrentCol}: ColumnProps)
             </div>
 
             {/* Column Area */}
-            <div className="flex-1 overflow-y-auto p-3 flex flex-col gap-3 custom-scrollbar">
+            <div className="flex-1 bg-gray-50 overflow-y-auto p-3 flex flex-col gap-3 custom-scrollbar">
                 {children}
             </div>
 

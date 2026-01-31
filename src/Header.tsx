@@ -33,7 +33,7 @@ const Header = ({jobProjName, jobProjDetails, handleNewTag, tagTypes, isCollapse
     }
 
     return(
-        <section className="bg-white border-b border-black/[0.06]">
+        <section className="bg-gray-50 border-b border-black/[0.06]">
             {/* Top Bar */}
             <div className="flex py-3 px-8 justify-between items-center h-[60px]">
                 <div className="flex items-center gap-3">
