@@ -6,46 +6,70 @@ import type { TabViewProps } from "./Types";
 
 
 const Tag = ({handleNewTag, tagTypes}: HeaderProps) => {
-
     const [tag, setTag] = useState<string>("");
 
     function handleTag(){
-        if(tagTypes.length > 4 || tag === "") return
-        handleNewTag([tag, ...tagTypes])
+        if(tagTypes.length >= 5 || tag.trim() === "") return
+        handleNewTag([tag.trim(), ...tagTypes])
         setTag("")
     }
 
     function handleDeleteTag(id: number){
-        handleNewTag( tagTypes.filter((tags, indx) => indx !== id))
+        handleNewTag(tagTypes.filter((_, indx) => indx !== id))
     }
 
+    return (
+        <div className="flex flex-col gap-2 w-full">
+            <label className="text-[13px] font-semibold text-[#1A1A1A]">Active Tags</label>
+            
+            {/* Main tag Container */}
+            <div className="group flex flex-wrap items-center gap-2 p-2 min-h-[46px] bg-white border-[1.5px] border-[#E5E5E5] rounded-xl focus-within:border-black transition-all">
+                
+                {/*Rendered Tags*/}
+                {tagTypes.map((t, indx) => (
+                    <div 
+                        key={indx} 
+                        className="flex items-center gap-1.5 bg-black/[0.04] border border-black/[0.05] pl-2 pr-1 py-1 rounded-lg animate-in fade-in zoom-in-95 duration-200"
+                    >
+                        <span className="text-[12px] font-bold text-black/70 tracking-tight">{t}</span>
+                        <button 
+                            onClick={() => handleDeleteTag(indx)}
+                            className="w-5 h-5 flex items-center justify-center rounded-md hover:bg-black/10 transition-colors text-black/40 hover:text-black"
+                        >
+                           
+                            <IconSet iconName="close" size={12} />
+                        </button>
+                    </div>
+                ))}
 
-    return(
-      
-        <div>
-            <>
-            <div className="flex bg-red-700 min-w-140 max-w-140 p-2">    
-             <div className="flex gap-3 overflow-x-scroll w-full">    
-                    { tagTypes.map((tag, indx) => 
-                        <div className="flex gap-1 outline-1 bg-amber-50 p-1 rounded-4xl" key={`${indx}`}>
-                            <button onClick={()=>{ handleDeleteTag(indx) }}>
-                                <IconSet iconName="plus" size={18}></IconSet>
-                            </button> 
-                            <h4>{tag}</h4> 
-                        </div>
-                    )}
-                </div>
-                <input className="ml-auto" 
-                       type="text"
-                       value={tag} 
-                       onChange={(e)=>{ setTag(e.target.value)}} 
-                       onKeyDown={(e)=>{ if(e.key === 'Enter') handleTag(); }}/>
+                {/* Inline Input */}
+                {tagTypes.length < 5 && (
+                    <input 
+                        type="text"
+                        placeholder={tagTypes.length === 0 ? "Add tags..." : ""}
+                        className="flex-1 min-w-[80px] h-full bg-transparent text-[13px] font-medium outline-none placeholder:text-black/20"
+                        value={tag} 
+                        onChange={(e) => setTag(e.target.value)} 
+                        onKeyDown={(e) => {
+                            if(e.key === 'Enter') {
+                                e.preventDefault();
+                                handleTag();
+                            }
+                        }}
+                    />
+                )}
             </div>
-            </>
-             {tagTypes.length > 4 && <p className="text-blue-500">Cannot set more than {tagTypes.length} tags</p>}              
+
+            {/* Validation Message */}
+            <div className="h-4"> 
+                {tagTypes.length >= 5 && (
+                    <p className="text-[11px] font-bold text-red-400 uppercase tracking-wider animate-pulse">
+                        Tag limit reached (5/5)
+                    </p>
+                )}
+            </div>
         </div>
     )
-
 }
 
 
@@ -56,10 +80,11 @@ const TabView = ({children, data, jobs, onShowModal, tags, onHandleTab, tabActiv
     
     return (
         <div className="flex flex-col h-full overflow-hidden">
-            <div className="px-8 py-4">
+            <div className="px-8 py-4 mb-3">
                 <div className="flex justify-between items-end">
+                    
                     {/* Stats Section */}
-                    <div className='flex flex-col gap-3'>
+                    <div className='flex flex-col gap-2'>
                         <div className='flex gap-8'>
                             <StatBlock svgType='clock' svgSize={22} statTxt='Created' data={new Date().toLocaleDateString()} />
                             <StatBlock svgType='calender2' svgSize={24} statTxt='Jobs Tracked' data={data.length || <span className="text-sm font-medium text-black/20 italic ">0 tracked</span>} />
@@ -67,23 +92,12 @@ const TabView = ({children, data, jobs, onShowModal, tags, onHandleTab, tabActiv
                             <StatBlock svgType='tags' 
                                        svgSize={22} 
                                        statTxt='Active Tags' 
-                                       data={tags.length > 0 ? tags.map((tag, indx) => (
-                                            <div key={indx} className="px-2.5 py-0.5 bg-black/[0.03] border border-black/[0.09] rounded-lg text-[11px] font-bold text-black/60 ">
+                                       data={   tags.length > 0 ? tags.map((tag, indx) => (
+                                            <p key={indx} className="px-2.5 py-0.5 bg-black/[0.03] border border-black/[0.09] rounded-lg text-[11px] font-bold text-black/60 ">
                                                 {tag}
-                                            </div>
+                                            </p>
                                 )) : <span className="text-sm font-medium text-black/20 italic ">No tags set...</span>} />
                         
-                        {/* Tags Section */}
-                        {/* <div className="flex items-center gap-3">
-                            <span className="text-[10px] font-black text-black/20  tracking-[0.15em]">Active Tags</span>
-                            <div className="flex gap-2">
-                                {tags.length > 0 ? tags.map((tag, indx) => (
-                                    <div key={indx} className="px-2.5 py-0.5 bg-black/[0.03] border border-black/[0.05] rounded-full text-[11px] font-bold text-black/60 shadow-sm">
-                                        {tag}
-                                    </div>
-                                )) : <span className="text-[10px] text-black/20 italic font-medium">No tags set...</span>}
-                            </div>
-                        </div> */}
                     </div>
 
                     {/* Tab Switcher */}
@@ -111,143 +125,151 @@ const TabView = ({children, data, jobs, onShowModal, tags, onHandleTab, tabActiv
             </div>
 
             {/* Viewport Area  */}
-<div className="flex-1 min-h-0 overflow-hidden">
-    {jobs.length ? (
-        <div className="h-full flex gap-7 overflow-x-auto px-8 pb-8 justify-start items-start custom-scrollbar">
-            {children}
-        </div>
-    ) : (
-    
-        <div className="mx-8 flex flex-col w-auto items-center justify-center border-2 border-dashed rounded-[24px] py-12 h-full border-black/[0.05] bg-gray-50/40 transition-all"> 
-            <img 
-                src="/src/assets/flat-briefcase-icon-by-Vexels 1.png" 
-                alt="Empty Workspace" 
-                className="w-48 opacity-15 grayscale mb-6 select-none" 
-            />
-            <div className="text-center flex flex-col items-center">
-                <h2 className="text-1xl font-black text-[#0A0A0A] tracking-tight mb-2 ">
-                    Tracker empty
-                </h2>
-                <p className="text-[14px] text-black/40 font-medium mb-10 max-w-[320px] leading-relaxed">
-                    Start your journey by tracking your first application to see your dashboard come to life.
-                </p>
+            <div className="flex-1 min-h-0 overflow-hidden">
+                {jobs.length ? (
+                    <div className="h-full flex gap-7 overflow-x-auto px-8 pb-8 justify-start items-start custom-scrollbar">
+                        {children}
+                    </div>
+                ) : (
                 
-                <button 
-                    className="bg-[#e6e6e6] text-white px-4 py-4 rounded-full text-[13px] font-black uppercase tracking-widest shadow-lg hover:bg-gray-800 hover:scale-[1.02] active:scale-95 transition-all" 
-                    onClick={onShowModal}
-                >
-                    <IconSet iconName="plus" size={23}></IconSet>
-                </button>
+                    <div className="mx-8 flex flex-col w-auto items-center justify-center border-2 border-dashed rounded-[24px] py-12 h-full border-black/[0.05] bg-gray-50/40 transition-all"> 
+                        <img 
+                            src="/src/assets/flat-briefcase-icon-by-Vexels 1.png" 
+                            alt="Empty Workspace" 
+                            className="w-48 opacity-15 grayscale mb-6 select-none" 
+                        />
+                        <div className="text-center flex flex-col items-center">
+                            <h2 className="text-1xl font-black text-[#0A0A0A] tracking-tight mb-2 ">
+                                Tracker empty
+                            </h2>
+                            <p className="text-[14px] text-black/40 font-medium mb-10 max-w-[320px] leading-relaxed">
+                                Start your journey by tracking your first application to see your dashboard come to life.
+                            </p>
+                            
+                            <button 
+                                className="bg-gray-50 text-white px-4 py-4 rounded-full text-[13px] font-black uppercase tracking-widest shadow-lg hover:bg-black/10 hover:scale-[1.02] active:scale-95 transition-all" 
+                                onClick={onShowModal}
+                            >
+                                <IconSet iconName="plus" size={23}></IconSet>
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
-        </div>
-    )}
-</div>
-        </div>
-    );
-};
+                    </div>
+                );
+            };
 
 
-const StatBlock = ({svgType,svgSize, statTxt, children, data}: StatsBlockProps) => {
-    return(
-        <div>
-            <div className="flex items-center gap-1">
-            <IconSet iconName={svgType} size={svgSize}></IconSet>
-            <p className="text-sm font-bold  text-black/30 tracking-wide">{statTxt}:</p>
-            <p className="text-sm font-bold text-black/60 ">{data || children}</p> 
+    const StatBlock = ({svgType,svgSize, statTxt, children, data}: StatsBlockProps) => {
+        return(
+                <div>
+                    <div className="flex items-center gap-1">
+                        <IconSet iconName={svgType} size={svgSize}></IconSet>
+                        <p className="text-sm font-bold  text-black/30 tracking-wide">{statTxt}:</p>
+                        <div className="text-sm font-bold text-black/60 flex gap-2">{data || children}</div> 
+                    </div>
+        
+                </div>
+                )
+            }
+
+    const ProjectSetModal = () => {
+
+        return(
+            <form>
+                <h1>New Tracker:</h1>
+                <>
+                    <input type="text" name="projName" id="" />
+                </>
             
-            </div>
-            {/* {children} */}
-        </div>
-    )
-}
+                <input type="text" name="tags" />
+                <input type="text" name="status" />
+            </form>
+        )
 
-const ProjectSetModal = () => {
-
-    return(
-        <form>
-            <h1>New Tracker:</h1>
-            <>
-                <input type="text" name="projName" id="" />
-            </>
-          
-            <input type="text" name="tags" />
-            <input type="text" name="status" />
-        </form>
-    )
-
-}
-
-type CustomContainerT = {
-  containerName: string,
-  containerColor?: string,
-}
-
-type ModalNewContainerProps = {
-setNewContainer: (container: CustomContainerT) => void
-
-}
-
-const ModalNewContainer = ({setNewContainer}: ModalNewContainerProps) => {
-    
-  const [showNewModal, setShowNewModal] = useState<boolean>(true)
-  const [containerName, setContainerName] = useState<string>("")
-//   const [containerColor, setContainerColor] = useState<string>("")
-
-  function handleNewModal(){
-  setShowNewModal(!showNewModal && false)
- }
-    
- function handleNewContainer(){
-
-    const newContainer = {
-
-        containerName: containerName,
-        // containerColor: containerName,
     }
 
-    setNewContainer(newContainer);
+    type CustomContainerT = {
+        containerName: string,
+        containerColor?: string,
+    }
 
- }
+    type ModalNewContainerProps = {
+        setNewContainer: (container: CustomContainerT) => void
+    }
 
-    return(
+    const ModalNewContainer = ({setNewContainer}: ModalNewContainerProps) => {
 
-    showNewModal && (
-        <form className=" absolute bg-red-400 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-3 ">
-            <div className=" flex justify-between">
-            <h1>Name</h1>
-            <button onClick={(e)=> {
-                e.preventDefault();
-                handleNewModal();
-            }}>
-                <IconSet iconName="close" size={18}></IconSet>
-W            </button>
-            </div>
-            <input type="text" name="projName" id="" onChange={(e)=>{
-                setContainerName(e.target.value)
-            }} />
-       
-            <div>
-                Container color
+        const [containerName, setContainerName] = useState<string>("");
+        const [isVisible, setIsVisible] = useState(true);
 
-                <ul className="flex justify-evenly">
-                    <li>fdsfs</li>    
-                    <li>fdsfs</li>    
-                    <li>fdsfs</li>    
-                </ul>                
-            </div>
-        
-            <button className="p-2 bg-red-500" onClick={(e)=>{
-                
-                e.preventDefault();
-                handleNewContainer();
-                handleNewModal();
+        const handleInternalClose = () => {
+            setIsVisible(false);
+        };
 
-            }}>Create</button>
+        function onSubmit() {
+            if (!containerName.trim()) return;
+            setNewContainer({ containerName: containerName });
+            handleInternalClose();
+        }
 
-        </form>
-    )
-)
-}
+        if (!isVisible) return null;
+
+        return (
+            <>
+                <div className='fixed inset-0 bg-black/30 backdrop-blur-[2px] z-[999]' onClick={handleInternalClose}></div>
+
+                <section className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-[440px] bg-white rounded-[16px] shadow-[0_20px_60px_rgba(0,0,0,0.3),0_0_1px_rgba(0,0,0,0.1)] z-[1000] flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
+                    
+                    <div className="pt-[28px] px-[32px] pb-[24px] border-b border-[#F0F0F0] relative">
+                        <button className="absolute right-[24px] top-[24px] w-[32px] h-[32px] rounded-[8px] flex items-center justify-center hover:bg-gray-100 transition-colors"
+                                onClick={handleInternalClose}>
+                            <IconSet iconName="close" size={16}/>
+                        </button>
+                        <h2 className="text-[22px] font-bold text-[#0A0A0A] leading-[1.3] tracking-[-0.02em]">
+                            Add New Column
+                        </h2>
+                        <p className="mt-[6px] text-[14px] text-[#737373] leading-[1.5]">
+                            Create a custom stage for your job tracking pipeline.
+                        </p>
+                    </div>
+
+                    <div className="p-[32px] pt-[28px] flex flex-col gap-[24px]">
+                        <div className="flex flex-col gap-[6px]">
+                            <label className="text-[13px] font-semibold text-[#1A1A1A]">Column Name</label>
+                            <input 
+                                autoFocus
+                                placeholder="e.g., Follow-up Required"
+                                className="w-full h-[40px] px-[14px] bg-white border-[1.5px] border-[#E5E5E5] rounded-[8px] text-[14px] outline-none focus:border-black transition-all"
+                                type="text" 
+                                value={containerName} 
+                                onChange={(e) => setContainerName(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Enter' && onSubmit()}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="px-[32px] py-[24px] border-t border-[#F0F0F0] flex gap-[12px] bg-white">
+                        <button 
+                            type="button" 
+                            onClick={handleInternalClose} 
+                            className="flex-1 h-[44px] bg-white border-[1.5px] border-[#E5E5E5] rounded-[8px] text-[15px] font-semibold text-[#404040] hover:bg-gray-50 transition-colors"
+                        >
+                            Cancel
+                        </button>
+                        <button 
+                            type="button" 
+                            onClick={onSubmit}
+                            className="flex-1 h-[44px] bg-[#0A0A0A] border-none rounded-[8px] text-[15px] font-semibold text-white shadow-[0_1px_2px_rgba(0,0,0,0.1)] hover:bg-[#262626] transition-colors"
+                        >
+                            Create Column
+                        </button>
+                    </div>
+                </section>
+            </>
+        );
+    };
 
 
 

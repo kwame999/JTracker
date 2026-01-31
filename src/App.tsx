@@ -20,7 +20,7 @@ function App() {
  const [showNewModal, setShowNewModal] = useState<boolean>(false)
  const [customContainer, setCustomContainer] = useState<CustomContainerT[]>([])
  const [tagTypes, setTagTypes] = useState<Tags[]>([]);
- const [tabActive, setTabActive] = useState<string>("");
+ const [tabActive, setTabActive] = useState<string>('Dashboard');
  const [currentColumn, setCurrentColumn] = useState<string>('')
 
   console.log(currentColumn)
@@ -147,7 +147,7 @@ function handleCurrentColumn(colName: string){
                         
 
                     {customContainer.map(container => <Column  name={container.containerName} onShowModal={handleShowModal} onCurrentCol={handleCurrentColumn}>
-                                                      {renderFilteredJob(container.containerName)}
+                                                      {renderFilteredJob(container.containerName.toLowerCase())}
                                                       </Column>)}
                     
                   </div>}

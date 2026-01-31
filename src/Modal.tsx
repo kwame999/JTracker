@@ -158,7 +158,10 @@ const Modal = ({ onAddJob, editingJob, updateJob, cancelJob, onAddCustomCol, cur
 
                 {/* Footer Buttons */}
                 <div className="px-[32px] py-[24px] border-t border-[#F0F0F0] flex gap-[12px] bg-white">
-                    <button type="button" onClick={handleClose} className="flex-1 h-[44px] bg-white border-[1.5px] border-[#E5E5E5] rounded-[8px] text-[15px] font-semibold text-[#404040] hover:bg-gray-50 transition-colors">
+                    <button type="button" onClick={()=>{
+                        handleClose()
+                        onSetCurrentCol("");
+                    }} className="flex-1 h-[44px] bg-white border-[1.5px] border-[#E5E5E5] rounded-[8px] text-[15px] font-semibold text-[#404040] hover:bg-gray-50 transition-colors">
                         Cancel
                     </button>
                     <button 

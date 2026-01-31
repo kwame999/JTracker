@@ -23,7 +23,7 @@ const SideNav = ({recentJobs}:SideNavProps) => {
         <aside 
             className={`
                 flex flex-col h-screen pt-[20px] pb-[20px] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
-                bg-white border-r border-black/[0.06] shadow-[0_1px_3px_0_rgba(0,0,0,0.02)]
+                bg-gray-50 border-r border-black/[0.1] shadow-[0_1px_3px_0_rgba(0,0,0,0.02)]
                 relative overflow-hidden select-none resize-none
                 ${isExpanded ? "w-[240px]" : "w-[50px] cursor-ew-resize"}
             `}
