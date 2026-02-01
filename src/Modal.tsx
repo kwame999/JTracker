@@ -47,7 +47,7 @@ const Modal = ({ onAddJob, editingJob, updateJob, cancelJob, onAddCustomCol, cur
             favorites: false,
         }
 
-        if (editingJob) { updateJob(newJob) } else { onAddJob(newJob) }
+        if (editingJob) { updateJob(newJob) } else { newJob.company && onAddJob(newJob) }
       
     }
 
