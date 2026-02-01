@@ -75,7 +75,8 @@ function renderFilteredJob(jobStatus: string){
       .map(job => ( <Card key={job.id} 
                           job={job} 
                           onDelete={handleDeleteJobs} 
-                          onEdit={handleEditJob}></Card>) ) 
+                          onEdit={handleEditJob}
+                          showModal={handleShowModal}></Card>) ) 
 }
 
 
