@@ -75,7 +75,8 @@ function renderFilteredJob(jobStatus: string){
       .map(job => ( <Card key={job.id} 
                           job={job} 
                           onDelete={handleDeleteJobs} 
-                          onEdit={handleEditJob}></Card>) ) 
+                          onEdit={handleEditJob}
+                          showModal={handleShowModal}></Card>) ) 
 }
 
 
@@ -144,7 +145,9 @@ function handleCurrentColumn(colName: string){
                                                         { renderFilteredJob('rejected') }
                                                         </Column> }
                         
-
+                    {/* {jobs.map(job => jobStatusTypeCheck(job.status) && <Column name={job.status} onShowModal={handleShowModal} onCurrentCol={handleCurrentColumn}>
+                                                                       { renderFilteredJob(job.status)}
+                                                                       </Column>)} */}
                     {customContainer.map(container => <Column  name={container.containerName} onShowModal={handleShowModal} onCurrentCol={handleCurrentColumn}>
                                                       {renderFilteredJob(container.containerName.toLowerCase())}
                                                       </Column>)}

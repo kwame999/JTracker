@@ -37,6 +37,7 @@ export type CardProps = {
     job: JobType,
     onDelete: (id: string) => void
     onEdit: (id: string) => void
+    showModal: () => void;
 }
 
 export type CardPreview = {

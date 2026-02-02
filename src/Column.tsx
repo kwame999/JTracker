@@ -42,7 +42,7 @@ const Column = ({children, color, name, onShowModal, onCurrentCol}: ColumnProps)
     )
 }
 
-const Card = ({job, onDelete, onEdit}: CardProps) => {
+const Card = ({job, onDelete, onEdit, showModal}: CardProps) => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const {id, company, position, moodTxt, createdAt, salary, companyIcon: {logo, alt}} = job
 
@@ -80,7 +80,9 @@ const Card = ({job, onDelete, onEdit}: CardProps) => {
                 <div className="mt-4 pt-4 border-t border-gray-50 space-y-3">
                     <p className="text-xs text-gray-500 italic">"{moodTxt || 'No notes...'}"</p>
                     <div className="flex gap-2">
-                        <button className="flex-1 py-1.5 text-xs font-bold bg-gray-100 rounded-lg" onClick={() => onEdit(id)}>Edit</button>
+                        <button className="flex-1 py-1.5 text-xs font-bold bg-gray-100 rounded-lg" onClick={() => {onEdit(id)
+                                                                                                                     showModal()
+                        }}>Edit</button>
                         <button className="flex-1 py-1.5 text-xs font-bold bg-red-50 text-red-600 rounded-lg" onClick={() => onDelete(id)}>Delete</button>
                     </div>
                 </div>
